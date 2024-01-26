@@ -4,6 +4,8 @@ OBJ_REC = basicClassification.o advancedClassificationRecursion.o
 MAIN_FILE = main.c
 
 
+all: mains maindloop mainrec
+
 ### build static libraries ###
 loop: libclassloops.a
 libclassloops.a: $(OBJ_LOOP)
@@ -18,10 +20,12 @@ libclassrec.a: $(OBJ_REC)
 recursived: libclassrec.so
 libclassrec.so: $(OBJ_REC)
 	$(CC) -shared $(OBJ_REC) -o libclassrec.so
+	export LD_LIBRARY_PATH=.
 
 looped: libclassloops.so
 libclassloops.so: $(OBJ_LOOP)
 	$(CC) -shared $(OBJ_LOOP) -o libclassloops.so
+	export LD_LIBRARY_PATH=.
 ### end build dynamic libraries ###
 
 
@@ -53,8 +57,8 @@ advancedClassificationLoop.o: advancedClassificationLoop.c NumClass.h
 ### end build files ###
 
 clean:
-	rm -f *.o
-	rm -f *.a
-	rm -f *.so
+	rm -f *.o^
+	rm -f *.a^
+	rm -f *.so^
 
 #make loop, make recursive, make recursived, make looped, make mains, make maindloop, make mainrec, make all, make clean
